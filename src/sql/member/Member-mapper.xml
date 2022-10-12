@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+    <entry key="loginMember">
+        SELECT *
+        FROM MEMBER
+        WHERE USER_ID=?
+            AND USER_PWD=?
+            AND STATUS='Y'
+    </entry>
+    <entry key="insertMember">
+        INSERT INTO MEMBER VALUES(
+        SEQ_UNO.NEXTVAL,?,?,?,?,?,?,?
+        ,DEFAULT,DEFAULT,DEFAULT
+        )
+    </entry>
+    <entry key="updateMember">
+        UPDATE MEMBER
+                SET
+                    USER_NAME=?,
+                    PHONE=?,
+                    EMAIL=?,
+                    ADDRESS=?,
+                    INTEREST=?,
+                    MODIFY_DATE=SYSDATE
+                WHERE USER_ID=?
+    </entry>
+    <entry key="refreshMember">
+        SELECT *
+        FROM MEMBER
+        WHERE USER_ID=?
+    </entry>
+    <entry key="updatePwdMember">
+        UPDATE MEMBER
+            SET USER_PWD=?,
+                MODIFY_DATE=SYSDATE
+        WHERE USER_ID=? AND USER_PWD=?
+    </entry>
+</properties>
