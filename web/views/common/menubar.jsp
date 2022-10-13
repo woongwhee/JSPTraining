@@ -62,6 +62,13 @@
         .menu a:hover{
             background-color: palegoldenrod;
         }
+        .outer{
+            background-color: yellowgreen;
+            color:black;
+            width: 1000px;
+            margin: auto;
+            margin-top: 50px;
+        }
     </style>
 </head>
 <body>

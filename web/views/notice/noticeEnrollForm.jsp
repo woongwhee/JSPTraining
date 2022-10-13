@@ -1,0 +1,33 @@
+<%--
+  Created by IntelliJ IDEA.
+  User: jinunghwi
+  Date: 2022/10/13
+  Time: 5:13 PM
+  To change this template use File | Settings | File Templates.
+--%>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<html>
+<head>
+    <title>공지사항 작성</title>
+</head>
+<body>
+<nav>
+    <%@include file="../common/menubar.jsp"%>
+</nav>
+<main class="outer">
+<form action="<%=contextPath%>/insert.no" method="post">
+    <input type="hidden" name="userNo" value="<%=loginUser.getUserNo()%>">
+    <input type="text" name="title" class="form-control mt-4 mb-2"
+           placeholder="제목을 입력해주세요." required
+    >
+    <div class="form-group">
+		<textarea name="content" class="form-control" rows="10"
+                  placeholder="내용을 입력해주세요" required
+        ></textarea>
+    </div>
+    <button type="submit" class="btn btn-secondary mb-3">작성하기</button>
+    <button type="button" class="btn btn-secondary mb-3" onclick="history.back()">뒤로가기</button>
+</form>
+</main>
+</body>
+</html>

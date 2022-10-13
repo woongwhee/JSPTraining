@@ -10,6 +10,8 @@ public class LogoutContrller extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         // 로그아웃 요청 처리=> session에 저장되었는 loginUser정보를 만료시키기.(세션을 무효화)
+        request.setCharacterEncoding("UTF-8");
+
         HttpSession session=request.getSession();
         session.invalidate();
         //응답페이지 -> /jsp

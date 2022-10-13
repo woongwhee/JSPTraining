@@ -90,7 +90,8 @@
                 <button type="submit" class="btn btn-secondary btn-sm">정보변경</button>
                 <button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#updatePwdForm">
                     비밀번호 변경</button>
-                <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#deleteForm">회원탈퇴</button >
+                <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#deleteForm">회원탈퇴
+                </button >
             </div>
 
         </form>
@@ -134,20 +135,23 @@
                         }
                     </script>
                 </div>
+                </div>
+                <div class="modal-footer">
             </div>
+        </div>
         </div>
         <div class="modal" id="deleteForm" tabindex="-1">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title">Modal title</h5>
+                        <h5 class="modal-title">회원탈퇴</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
-                    <div class="modal-body">
+                    <div class="modal-body" align="center">
+                        <h4>정말로 회원탈퇴하시겠습니까?</h4>
                         <form action="<%=contextPath%>/deleteMember.me" method="post">
-                            <h1>정말로 회원탈퇴하시겠습니까?</h1>
                             <tabel>
                                 <th>
                                     <td>현재비밀번호</td>
@@ -161,7 +165,6 @@
                     </div>
                 </div>
             </div>
-    </div>
-
+        </div>
 </body>
 </html>

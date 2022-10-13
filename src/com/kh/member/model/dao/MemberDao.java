@@ -126,7 +126,23 @@ public class MemberDao {
         }
         return updateMember;
     }
+    public int deleteMember(String userId,String userPwd,Connection conn){
+        PreparedStatement psmt=null;
+        int result=0;
+        String sql=prop.getProperty("deleteMember");
+        try {
+            psmt=conn.prepareStatement(sql);
+            psmt.setString(1,userId);
+            psmt.setString(2,userPwd);
+            result=psmt.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }finally {
+            JDBCTemplet.close(psmt);
+        }
+        return result;
 
+    }
     private Member resultToMember(ResultSet rset) throws SQLException {
         Member m=null;
         if(rset.next()) {

@@ -8,7 +8,6 @@ import java.util.Properties;
 public class JDBCTemplet{
     private static Connection conn=null;
     private JDBCTemplet(){
-
     }
     //1. Connection 객체 생성(DB접속)한 후 해당 Connection을 반환하는 메소드
     public static Connection getConnection(){

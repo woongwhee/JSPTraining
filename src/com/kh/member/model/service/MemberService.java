@@ -57,7 +57,6 @@ public class MemberService {
     public Member updatePwdMember(String userId,String userPwd,String updatePwd){
         Member updateMember=null;
         Connection conn=JDBCTemplet.getConnection();
-        System.out.println(" "+userId+" "+userPwd+" "+updatePwd);
         int result=new MemberDao().updatePwdMember(userId,userPwd,updatePwd,conn);
         if(result>0){
             updateMember=new MemberDao().selectMember(userId,conn);
@@ -67,5 +66,21 @@ public class MemberService {
         }
         JDBCTemplet.close();
         return updateMember;
+    }
+
+    /**
+     * 회원탈퇴용 서비스
+     * @param userId 탈퇴요청한 회원의 아이디.
+     * @param userPwd 탈퇴요청한 회원의 비밀번호.
+     * @return 처리된 행의수
+     */
+    public int deleteMember(String userId,String userPwd){
+        Connection conn=JDBCTemplet.getConnection();
+        int result=new MemberDao().deleteMember(userId,userPwd,conn);
+        if(result>0){JDBCTemplet.commit();}
+        else{
+            JDBCTemplet.rollback();
+        }
+        return result;
     }
 }

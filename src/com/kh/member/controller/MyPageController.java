@@ -14,6 +14,8 @@ public class MyPageController extends HttpServlet {
         //url로 직접 요청도 가능하기 때문에
         //로그인 전 요청시 -=>메인페이지로
         //로그인후 요청시 ->마이페이지로 포워딩.
+        request.setCharacterEncoding("UTF-8");
+
         HttpSession session=request.getSession();
         Member loginUser=(Member)session.getAttribute("loginUser");
         if(loginUser==null){
