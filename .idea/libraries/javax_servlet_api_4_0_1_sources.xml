@@ -3,6 +3,7 @@
     <CLASSES>
       <root url="jar://$PROJECT_DIR$/web/WEB-INF/lib/javax.servlet-api-4.0.1.jar!/" />
       <root url="jar://$PROJECT_DIR$/web/WEB-INF/lib/ojdbc6.jar!/" />
+      <root url="jar://$USER_HOME$/dev/cos.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES>

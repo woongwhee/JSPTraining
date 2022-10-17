@@ -36,21 +36,30 @@ public class JDBCTemplet{
         }
         return conn;
     }
-    //2. 전달받은 Connection 객체를 가지고 Commit해주는 메소드
+    //2. 전달받은 Connection 객체를 가지고 Commit 해주는 메소드
     public static void commit(){
         try{
             if(conn!=null&&!conn.isClosed()){
                 conn.commit();
             }
-
         }catch (SQLException e){
             e.printStackTrace();
         }
 
 
     }
+
     //3. 전달받은 Connection 객체를 가지고 RollBack해주는 메소드
     public static void rollback(){
+        try{
+            if(conn!=null&&!conn.isClosed()){
+                conn.rollback();
+            }
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+    }
+    public static void rollback(Connection conn){
         try{
             if(conn!=null&&!conn.isClosed()){
                 conn.rollback();

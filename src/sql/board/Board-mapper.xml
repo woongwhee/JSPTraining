@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+    <entry key="selectListCount">
+        SELECT
+            COUNT(*) as cnt
+        FROM BOARD
+        WHERE STATUS='Y'
+    </entry>
+
+    <entry key="selectAllList">
+        SELECT
+            *
+        FROM (
+            SELECT
+                ROWNUM AS rnum,
+                Bo.*
+            FROM(
+                SELECT
+                    BOARD_NO,
+                    CATEGORY_NAME,
+                    BOARD_TITLE,
+                    USER_ID,
+                    COUNT,
+                    CREATE_DATE
+                FROM BOARD b
+                JOIN CATEGORY USING(CATEGORY_NO)
+                JOIN MEMBER ON (BOARD_WRITER=USER_NO)
+                WHERE b.STATUS='Y'
+                ORDER BY BOARD_NO DESC
+            )Bo
+        )
+        WHERE rnum BETWEEN ? AND ?
+    </entry>
+
+    <entry key="selectByCategoryName">
+        SELECT
+            *
+        FROM (
+            SELECT
+                ROWNUM AS rnum,
+                Bo.*
+            FROM(
+                SELECT
+                    BOARD_NO,
+                    CATEGORY_NAME,
+                    BOARD_TITLE,
+                    USER_ID,
+                    COUNT,
+                    CREATE_DATE
+                FROM BOARD b
+                JOIN CATEGORY c on c.CATEGORY_NO = b.CATEGORY_NO
+                JOIN MEMBER ON (BOARD_WRITER=USER_NO)
+                WHERE  CATEGORY_NAME = ? and b.STATUS='Y'
+                ORDER BY BOARD_NO DESC
+            )Bo
+        )
+        WHERE rnum BETWEEN ? AND ?
+    </entry>
+
+    <entry key="insertAttachment">
+        INSERT INTO ATTACHMENT VALUES(
+        SEQ_FNO.NEXTVAL,?,?,?,?,DEFAULT,DEFAULT,'Y'
+        )
+    </entry>
+
+    <entry key="insertBoard">
+        INSERT INTO BOARD VALUES(
+        SEQ_BNO.NEXTVAL,?,?,?,?,?,0,SYSDATE,'Y')
+    </entry>
+    <entry key="increaseCount">
+        UPDATE BOARD
+            SET COUNT=COUNT+1
+        WHERE BOARD_NO=? AND STATUS='Y'
+    </entry>
+
+    <entry key="selectBoard">
+        SELECT
+            BOARD_NO,
+            CATEGORY_NAME,
+            BOARD_TITLE,
+            BOARD_CONTENT,
+            USER_ID,
+            CREATE_DATE
+        FROM BOARD B
+        LEFT JOIN CATEGORY USING(CATEGORY_NO)
+        JOIN MEMBER ON (BOARD_WRITER=USER_NO)
+        WHERE B.STATUS='Y' AND BOARD_NO=?
+    </entry>
+    <entry key="selectAttachment">
+        SELECT
+            FILE_NO,
+            ORIGIN_NAME,
+            CHANGE_NAME,
+            FILE_PATH
+        FROM ATTACHMENT
+        WHERE REF_BNO = ? AND STATUS = 'Y'
+    </entry>
+    <entry key="selectCategoryList">
+        SELECT *
+        FROM CATEGORY
+    </entry>
+
+    <entry key="getbNo">
+        SELECT SEQ_BNO.CURRVAL as sc FROM DUAL
+    </entry>
+</properties>

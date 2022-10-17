@@ -26,7 +26,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <title>Welcome B Class</title>
     <style>
-
         #login-form,#user-info{
             float: right;
         }
@@ -61,6 +60,20 @@
         }
         .menu a:hover{
             background-color: palegoldenrod;
+        }
+        #normal{
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            height: 100%;
+        }
+        #normal>li{
+            list-style-type: none;
+            padding: 0;
+            display: none;
+        }
+        #normalMenu> a:hover+ul,#normal>li:hover{
+            display: block;
         }
         .outer{
             background-color: yellowgreen;
@@ -128,9 +141,26 @@
     <div class="nav-area" style="text-align: center">
         <div class="menu"><a href="<%=contextPath%>">menu</a></div>
         <div class="menu"><a href="<%=contextPath%>/list.no">공지사항</a></div>
-        <div class="menu"><a href="<%=contextPath%>/list.do?currentPage">일반게시판</a></div>
+        <div class="menu" id="normalMenu"><a href="<%=contextPath%>/list.bo">일반게시판</a><ul id="normal">
+            <li>공통</li>
+            <li>운동</li>
+            <li>등산</li>
+            <li>게임</li>
+            <li>낚시</li>
+            <li>요리</li>
+            <li>기타</li>
+        </ul></div>
         <div class="menu"><a href="<%=contextPath%>/list.th">사진게시판</a></div>
     </div>
+        <script>
+            $(function (){
+                $("#normal>li").click(function (){
+                    let ctg=$(this).text();
+                    location.href = '<%=contextPath%>/list.bo?ctg='+ctg;
+                })
+            })
+
+        </script>
 
 </body>
 </html>
