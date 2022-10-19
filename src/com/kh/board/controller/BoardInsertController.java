@@ -25,12 +25,14 @@ public class BoardInsertController extends HttpServlet {
         String category=request.getParameter("category");
         int userNo=Integer.parseInt(request.getParameter("userNo"));
         int BoardType=0;
+
         Part p=request.getPart("attachment");
         if(p.getSubmittedFileName().equals("")){
             BoardType=1;
         }else{
             BoardType=2;
         }
+
         Board b = new Board(BoardType,category, title, content,String.valueOf(userNo));
         int result = bs.insertBoard(b);//글번호를 반환하게
         if(result>0){

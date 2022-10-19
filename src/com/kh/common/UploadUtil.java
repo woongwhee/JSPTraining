@@ -27,7 +27,6 @@ public class UploadUtil{
         uploadUtil.setUploadPath(app.getRealPath(upfilesPath));
         return uploadUtil;
     }
-
     private void setApp(ServletContext app) {
         this.app = app;
     }
@@ -47,13 +46,12 @@ public class UploadUtil{
         {
             byte[] buf = new byte[1024];
             int len = 0;
-
             while((len = fis.read(buf, 0, 1024)) != -1)
             {
                 fos.write(buf, 0, len);
             }
+            fos.flush();
             at=new Attachment(filePart.getSubmittedFileName(),changeName,upfilesPath+File.separator+folderPath);
-
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -72,7 +70,21 @@ public class UploadUtil{
 
         return result;
     }
+    public boolean deleteFile(Attachment at){
+        String FilePath=at.getFilePath();
+        String fileName=at.getChangeName();
+        File file=new File(app.getRealPath(FilePath)+File.separator+fileName);
+        if(file.exists()){
+            if(file.delete()){
+                return true;
+            }else{
+                return false;
+            }
+        }else{
+            return false;
+        }
 
+    }
     private void createFolders(String paths) {
 
         File folders = new File(uploadPath, paths);

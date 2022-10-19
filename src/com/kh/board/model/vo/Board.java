@@ -18,8 +18,8 @@ public class Board {
         super();
     }
 
-    public Board(int boardType, String category, String boardTitle, String boardContent, String boardWriter) {
-        this.boardType = boardType;
+    public Board(int boardNo, String category, String boardTitle, String boardContent, String boardWriter) {
+        this.boardNo=boardNo;
         this.category = category;
         this.boardTitle = boardTitle;
         this.boardContent = boardContent;
@@ -39,7 +39,14 @@ public class Board {
         this.titleImg = titleImg;
     }
 
-    public Board(int boardNo, String category, String boardTitle,String boardWriter, int count, Date createDate) {
+    public Board(int boardNo, String boardTitle, int count, String titleImg) {
+        this.boardNo = boardNo;
+        this.boardTitle = boardTitle;
+        this.count = count;
+        this.titleImg = titleImg;
+    }
+
+    public Board(int boardNo, String category, String boardTitle, String boardWriter, int count, Date createDate) {
         super();
         this.boardNo = boardNo;
         this.category = category;

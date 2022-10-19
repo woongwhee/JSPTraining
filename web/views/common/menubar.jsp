@@ -36,6 +36,7 @@
         }
         .nav-area{
             background-color: yellowgreen;
+            height: 50px;
         }
         .menu{
             display:table-cell;
@@ -55,7 +56,7 @@
             display:block;
             font-weight: bold;
             width: 100%;
-            height: 100%;
+            height: 50px;
             line-height: 50px;
         }
         .menu a:hover{
@@ -68,11 +69,13 @@
             height: 100%;
         }
         #normal>li{
+            display: none;
             list-style-type: none;
             padding: 0;
-            display: none;
+            margin: auto;
+            border: palegoldenrod 1px solid;
         }
-        #normalMenu> a:hover+ul,#normal>li:hover{
+        #normalMenu a:hover+ul>li,#normal:hover>li{
             display: block;
         }
         .outer{

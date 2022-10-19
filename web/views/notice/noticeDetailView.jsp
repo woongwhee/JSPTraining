@@ -59,8 +59,8 @@
             </a>
             <%if(loginUser!=null&&loginUser.getUserId().equals(writer)){%>
             <%--로그인한사용자가 해당글을 작성한 작성자일경우에만 보여진다--%>
-            <a href="<%=contextPath%>/updateForm.no?nno=<%=noticeNo%>" class="btn btn-secondary btn-sm" >수정하기</a>
-            <a href="<%=contextPath%>/delete.no?nno=<%=noticeNo%>"class="btn btn-warring btn-sm" >삭제하기</a>
+            <a href="<%=contextPath%>/updateForm.bo?nno=<%=noticeNo%>" class="btn btn-info btn-sm" >수정하기</a>
+            <a href="<%=contextPath%>/delete.bo?nno=<%=noticeNo%>"class="btn btn-warning btn-sm" >삭제하기</a>
             <%}%>
 
         </div>

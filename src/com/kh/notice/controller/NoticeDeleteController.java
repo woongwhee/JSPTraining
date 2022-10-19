@@ -12,14 +12,19 @@ import java.io.IOException;
 public class NoticeDeleteController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
         if(!(request.getSession().getAttribute("loginUser")!=null&&((Member)request.getSession().getAttribute("loginUser")).getUserId().equals("admin"))){
             request.setAttribute("errorMsg","공지사항 삭제권한이 없습니다.");
             request.getRequestDispatcher("views/common/errorPage.jsp").forward(request,response);
         }
+
         request.setCharacterEncoding("UTF-8");
+
         int nno=Integer.parseInt(request.getParameter("nno"));
+
         int result=new NoticeService().deleteNotice(nno);
         HttpSession session=request.getSession();
+
         if(result>0){
             request.setAttribute("alert","공지사항이 성공적으로 삭제되었습니다.");
             response.sendRedirect(request.getContextPath()+"/list.no");
@@ -27,12 +32,11 @@ public class NoticeDeleteController extends HttpServlet {
             request.setAttribute("error","공지사항 삭제에 실패했습니다.");
             request.getRequestDispatcher("views/common/errorPage.jsp").forward(request,response);
         }
-
-
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
     }
+
 }

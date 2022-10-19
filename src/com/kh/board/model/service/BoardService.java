@@ -28,7 +28,7 @@ public class BoardService {
     public int increaseCount(int boardNo){
         Connection conn=getConnection();
         int result=new BoardDao().increaseCount(conn,boardNo);
-        commitAndRollback(result);
+        commitOrRollback(result);
         return  result;
     };
     public Board selectBoard(int boardNo){
@@ -40,17 +40,18 @@ public class BoardService {
     public int insertBoard(Board b){
         Connection conn=getConnection();
         int result=new BoardDao().insertBoard(conn,b);
-        commitAndRollback(result);
+        commitOrRollback(result);
         close();
         return result;
     }
     public int insertAttachment(Attachment at){
         Connection conn=getConnection();
         int result=new BoardDao().insertAttachment(conn,at);
-        commitAndRollback(result);
+        commitOrRollback(result);
         close();
         return result;
     }
+
     public Attachment selectAttachment(int boardNo){
         Connection conn=getConnection();
         Attachment at=new BoardDao().selectAttachment(conn,boardNo);
@@ -64,7 +65,40 @@ public class BoardService {
         close();
         return list;
     }
-    private void commitAndRollback(int result){
+
+    public int updateBoard(Board b){
+        Connection conn=getConnection();
+        int result=new BoardDao().updateBoard(conn,b);
+        commitOrRollback(result);
+        close();
+        return result;
+    }
+    public int deleteAttachment(int fileNo){
+        Connection conn=getConnection();
+        int result=new BoardDao().deleteAttachment(conn,fileNo);
+        commitOrRollback(result);
+
+        close();
+        return result;
+    }
+    public int deleteBoard(int boardNo,int userNo){
+        Connection conn=getConnection();
+        int result=new BoardDao().deleteBoard(conn,boardNo,userNo);
+        if(result>0){
+            new BoardDao().deleteAttachmentByBNO(conn,boardNo);
+        }
+        commitOrRollback(result);
+        close();
+        return result;
+    }
+    public ArrayList<Board> selectThumbnailList(){
+        Connection conn=getConnection();
+        ArrayList<Board> list=new BoardDao().selectThumbnailList(conn);
+        close();
+        return list;
+    }
+
+    private void commitOrRollback(int result){
         if(result>0){
             commit();
         }else{

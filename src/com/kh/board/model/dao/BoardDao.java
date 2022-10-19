@@ -19,7 +19,7 @@ import java.util.Properties;
 import static com.kh.common.JDBCTemplet.close;
 
 public class BoardDao {
-    private enum BoardType{Detail,List}
+    private enum BoardType{Detail,List,Thumb}
     private Properties prop;
     public BoardDao(){
         prop=new Properties();
@@ -50,6 +50,7 @@ public class BoardDao {
         }
         return list;
     }
+
     public ArrayList<Board> selectList(Connection conn, PageInfo PI){
         ArrayList<Board> list=new ArrayList<>();
         PreparedStatement pstm=null;
@@ -83,6 +84,31 @@ public class BoardDao {
         }
         return list;
     }
+    public ArrayList<Board> selectThumbnailList(Connection conn){
+        ArrayList<Board> list=new ArrayList<>();
+        PreparedStatement psmt=null;
+        ResultSet rset=null;
+        String sql=prop.getProperty("selectThumbnailList");
+        try{
+            psmt=conn.prepareStatement(sql);
+            rset=psmt.executeQuery();
+            Board b=null;
+            while((b=rsetToBoard(rset,BoardType.Thumb))!=null){
+                list.add(b);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }finally {
+            close(rset);
+            close(psmt);
+        }
+        return list;
+
+    }
+//    public int selectThumnailListCount(Connection conn){
+//
+//
+//    }
     public int selectListCount(Connection conn){
         PreparedStatement psmt=null;
         ResultSet rset=null;
@@ -157,6 +183,28 @@ public class BoardDao {
         }
         return at;
     };
+    public int updateBoard(Connection conn,Board b){
+        PreparedStatement psmt=null;
+        int result=0;
+        String sql=prop.getProperty("updateBoard");
+        try {
+            psmt=conn.prepareStatement(sql);
+            psmt.setString(1,b.getBoardTitle());
+            psmt.setInt(2,b.getBoardType());
+            psmt.setString(3,b.getCategory());
+            psmt.setString(4,b.getBoardContent());
+            psmt.setInt(5,b.getBoardNo());
+            psmt.setString(6,b.getBoardWriter());
+            result=psmt.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }finally {
+            close(psmt);
+        }
+        return result;
+    }
+
+
     public ArrayList<Category> selectCategoryList(Connection conn){
         PreparedStatement psmt=null;
         ResultSet rset=null;
@@ -171,6 +219,10 @@ public class BoardDao {
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
+        }
+        finally {
+            close(rset);
+            close(psmt);
         }
         return list;
 
@@ -200,6 +252,10 @@ public class BoardDao {
                 result=rset.getInt("sc");}
         }catch(SQLException e){
             e.printStackTrace();
+        }finally {
+            close(rset);
+            close(psmt2);
+            close(psmt);
         }
         return result;
     }
@@ -217,7 +273,64 @@ public class BoardDao {
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
+        }finally {
+            close(pstm);
         }
+        return result;
+    }
+
+    public int deleteBoard(Connection conn,int boardNo,int userNo){
+        PreparedStatement psmt=null;
+        int result=0;
+        String sql=prop.getProperty("deleteBoard");
+        try {
+            psmt=conn.prepareStatement(sql);
+            psmt.setInt(1,boardNo);
+            psmt.setInt(2,userNo);
+            result=psmt.executeUpdate();
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }finally {
+            close(psmt);
+        }
+
+        return result;
+    }
+    public int deleteAttachment(Connection conn,int atNo){
+        PreparedStatement psmt=null;
+        int result=0;
+        String sql=prop.getProperty("deleteAttachment");
+        try {
+            psmt=conn.prepareStatement(sql);
+            psmt.setInt(1,atNo);
+            result=psmt.executeUpdate();
+        } catch (SQLException e) {
+
+            throw new RuntimeException(e);
+        }finally {
+            close(psmt);
+        }
+
+
+        return result;
+    }
+    public int deleteAttachmentByBNO(Connection conn,int bno){
+        PreparedStatement psmt=null;
+        int result=0;
+        String sql=prop.getProperty("deleteAttachmentByBNO");
+        try {
+            psmt=conn.prepareStatement(sql);
+            psmt.setInt(1,bno);
+            result=psmt.executeUpdate();
+        } catch (SQLException e) {
+
+            throw new RuntimeException(e);
+        }finally {
+            close(psmt);
+        }
+
+
         return result;
     }
     private Category rsetToCategory(ResultSet rset)throws SQLException{
@@ -255,7 +368,12 @@ public class BoardDao {
                     rset.getString("board_content"),
                     rset.getString("user_id"),
                     rset.getDate("create_date"));}
-        }
+        }else if(type==BoardType.Thumb){
+            if(rset.next()){b=new Board(rset.getInt(1),
+                    rset.getString(2),
+                    rset.getInt(3),
+                    rset.getString(4));
+            }}
         return b;
     }
 

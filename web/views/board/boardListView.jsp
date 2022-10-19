@@ -12,6 +12,7 @@
     ArrayList<Board> list= (ArrayList<Board>) request.getAttribute("list");
     PageInfo pageInfo=(PageInfo) request.getAttribute("pageInfo");
     String ctg= pageInfo.getCategoryName()==null?"":"&ctg="+pageInfo.getCategoryName();
+    String pageTitle= pageInfo.getCategoryName()==null?"일반게시판":pageInfo.getCategoryName()+"게시판";
 %>
 <!doctype html>
 <html lang="en">
@@ -20,7 +21,7 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title><%if(pageInfo.getCategoryName()==null){%>일반<%}else{%><%=pageInfo.getCategoryName()%><%}%>게시판-B class</title>
+    <title><%=pageTitle%>-B class</title>
     <style>
         table{
             width: 1000px;
@@ -51,7 +52,7 @@
 
     </header>
     <main class="outer" >
-        <br><h2 style="text-align: center">일반 게시판</h2>
+        <br><h2 style="text-align: center"><%=pageTitle%></h2>
         <%if(loginUser!=null){%>
             <div align="right" style="width:850px">
                 <a href="<%=contextPath%>/enrollForm.bo" class="btn btn-sm btn-secondary">글작성</a>
