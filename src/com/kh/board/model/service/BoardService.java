@@ -12,6 +12,9 @@ import java.util.ArrayList;
 import static com.kh.common.JDBCTemplet.*;
 
 public class BoardService {
+    /*
+    --------------------------SELECT---------------------------------
+     */
     public ArrayList<Board> selectList(PageInfo PI){
         Connection conn= getConnection();
         ArrayList<Board> list=new BoardDao().selectList(conn,PI);
@@ -37,6 +40,30 @@ public class BoardService {
         close();
         return borad;
     }
+
+
+    public ArrayList<Category> selectCategoryList(){
+        Connection conn=getConnection();
+        ArrayList<Category> list=new BoardDao().selectCategoryList(conn);
+        close();
+        return list;
+    }
+
+    public Attachment selectAttachment(int boardNo){
+        Connection conn=getConnection();
+        Attachment at=new BoardDao().selectAttachment(conn,boardNo);
+        close();
+        return at;
+    }
+    public ArrayList<Attachment> selectAttachmentList(int boardNo){
+        Connection conn=getConnection();
+        ArrayList<Attachment> list=new BoardDao().selectAttachmentList(conn,boardNo);
+        close();
+        return list;
+    }
+    /*
+    --------------------------DML---------------------------------
+     */
     public int insertBoard(Board b){
         Connection conn=getConnection();
         int result=new BoardDao().insertBoard(conn,b);
@@ -51,21 +78,6 @@ public class BoardService {
         close();
         return result;
     }
-
-    public Attachment selectAttachment(int boardNo){
-        Connection conn=getConnection();
-        Attachment at=new BoardDao().selectAttachment(conn,boardNo);
-        close();
-        return at;
-    }
-
-    public ArrayList<Category> selectCategoryList(){
-        Connection conn=getConnection();
-        ArrayList<Category> list=new BoardDao().selectCategoryList(conn);
-        close();
-        return list;
-    }
-
     public int updateBoard(Board b){
         Connection conn=getConnection();
         int result=new BoardDao().updateBoard(conn,b);
@@ -96,6 +108,16 @@ public class BoardService {
         ArrayList<Board> list=new BoardDao().selectThumbnailList(conn);
         close();
         return list;
+    }
+    public int insertThumbnailBoard(Board b,ArrayList<Attachment> list){
+        Connection conn=getConnection();
+        int result1 =new BoardDao().insertThumbnailBoard(conn,b);
+        System.out.println(result1);
+        int result2 = new BoardDao().insertAttachmentList(conn,list);
+        int result=result1*result2;
+        commitOrRollback(result);
+        close();
+        return result;
     }
 
     private void commitOrRollback(int result){

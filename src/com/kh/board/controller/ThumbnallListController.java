@@ -21,6 +21,7 @@ public class ThumbnallListController extends HttpServlet {
 //        PageInfo PI=new PageInfo(listCount,tno);
 //        ArrayList<Board> list= new BoardService().selectThumbnailList(tno);
         ArrayList<Board> list= new BoardService().selectThumbnailList();
+        System.out.println(list);
         request.setAttribute("list",list);
         request.getRequestDispatcher("views/board/thumbnailListView.jsp").forward(request,response);
     }

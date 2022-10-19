@@ -24,7 +24,7 @@
 </head>
 <body>
     <%@include file="../common/menubar.jsp" %>
-    <div class="outer" style=" background-color:beige;height: 500px">
+    <div class="outer" style="background-color:beige;height :500px;">
         <br><h2 style="text-align: center;">일반게시판 상세보기</h2><br>
         <table id="detail-area" align="center" border="1">
             <thead>
